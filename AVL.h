@@ -117,8 +117,8 @@ class AVL
             string preOrderHelper( AVLNode* ) const;
             string inOrderHelper( AVLNode* ) const;
             string postOrderHelper( AVLNode* ) const;
-            string deleteNodeHelper(AVLNode* &, long);
-			
+            void deleteNodeHelper(AVLNode* &, long ); // Recursive counterpart of delete
+            
 	    AVLNode * singleRotateLeft(AVLNode  * );
 	    AVLNode * singleRotateRight(AVLNode * );
 	    AVLNode * doubleRotateLeft(AVLNode  * );
@@ -134,6 +134,7 @@ class AVL
             AVL() { rootPtr = NULL; };
             void emptyAVL() { rootPtr = NULL; };
             void insertAVLNode(int, string, string, string, string, string);
+            
             string preOrderTraversal() const;
             string inOrderTraversal() const;
             string postOrderTraversal() const;
@@ -194,8 +195,6 @@ void AVL::insertAVLNode(int clientID, string firstName, string lastName, string 
     }
 
 
-
-    
     
 
 
@@ -298,9 +297,6 @@ string AVL::preOrderHelper(AVLNode* ptr ) const
             }
         return record;
     }
-    
-
-
 
 
     

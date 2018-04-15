@@ -1393,10 +1393,7 @@ void MyFrame::OnAddDataPQ ( wxCommandEvent& WXUNUSED ( event ) )
 
     }
     datadialog -> Destroy();
-        
-
-        
-    }
+}
 
 void MyFrame::OnDisplayPQ ( wxCommandEvent& WXUNUSED ( event ) )
     {
@@ -1601,6 +1598,11 @@ void MyFrame::OnPushStack ( wxCommandEvent& WXUNUSED ( event ) )
 			// ... Now send the data to the ADT. e.g
 			s->pushStack(clientID, firstName, lastName, destination, period , booking);
    }
+    else {
+        datadialog -> Close();
+
+    }
+    datadialog -> Destroy();
         
     }
     
@@ -1689,14 +1691,96 @@ void MyFrame::OnCreateBST ( wxCommandEvent& WXUNUSED ( event ) )
     
 void MyFrame::OnAddDataBST ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        
-        
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Add Data to BST"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+		// If the OK button is clicked...
+		if (datadialog->ShowModal() == wxID_OK )
+		    {
+			//Grab value from the first name Box.
+			dataRec.name = datadialog->NameEditBox->GetValue();
+			
+			//Grab value from the Surname Box
+			dataRec.surname = datadialog->SurnameEditBox->GetValue();
+		
+			//Grab value from the clientID Box
+			dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+			
+			// Grab the total number of nights
+			dataRec.country = datadialog->CountryEditBox->GetValue();
+			
+			
+			//Grab the active radio button
+			if (datadialog->internet->GetValue() == true) 
+			    dataRec.trip = wxT("Internet");
+			if (datadialog->gifted->GetValue() == true) 
+			    dataRec.trip = wxT("Gifted");
+			if (datadialog->walkin->GetValue() == true) 
+			    dataRec.trip = wxT("Walk-in");
+			if (datadialog->telephone->GetValue() == true) 
+			    dataRec.trip = wxT("Telephone");
+	
+			//Grab the list item selected
+			
+			dataRec.season 	   = datadialog->seasonsCombo->GetValue();
+
+			
+			//Clear the main edit box and display the record just grabbed
+			MainEditBox->Clear();
+			
+            
+            			//   You need to disaggregate the data from dataRec to
+			//   send them to your ADTs. e.g.:
+			int    clientID 	 = dataRec.clientID;
+			string firstName = string(dataRec.name.mb_str());
+			string lastName  = string(dataRec.surname.mb_str());;
+			string country    = string(dataRec.country.mb_str());;
+			string season   = string(dataRec.season.mb_str());;
+			string trip      = string(dataRec.trip.mb_str());;
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+			
+			// ... Now send the data to the ADT. e.g
+			b -> insert(clientID, firstName, lastName, country, season, trip);
+            }
+             else {
+        datadialog -> Close();
+
+    }
+    datadialog -> Destroy();
     }
     
 void MyFrame::OnDeleteDataBST ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        MainEditBox->Clear(); 
+            
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Delete Data from BST"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+        // If the OK button is clicked...
+        if (datadialog->ShowModal() == wxID_OK )
+        {
+            //Grab value from the clientID Box
+            dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+            
+            
+            //Clear the main edit box and display the record just grabbed
+            MainEditBox->Clear();
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+            
+           int    clientID 	 = dataRec.clientID;
+           
+            b->remove(clientID);
+        }
+        else              //if (dialogBox->ShowModal() == wxID_CANCEL)
+            datadialog->Close();
         
+    datadialog->Destroy();
+            
     }
 
 void MyFrame::OnInorderBST ( wxCommandEvent& WXUNUSED ( event ) )
@@ -1816,14 +1900,72 @@ void MyFrame::OnCreateAVL ( wxCommandEvent& WXUNUSED ( event ) )
     
 void MyFrame::OnAddDataAVL ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Add Data to AVL Tree"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+		// If the OK button is clicked...
+		if (datadialog->ShowModal() == wxID_OK )
+		    {
+			//Grab value from the first name Box.
+			dataRec.name = datadialog->NameEditBox->GetValue();
+			
+			//Grab value from the Surname Box
+			dataRec.surname = datadialog->SurnameEditBox->GetValue();
+		
+			//Grab value from the clientID Box
+			dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+			
+			// Grab the total number of nights
+			dataRec.country = datadialog->CountryEditBox->GetValue();
+			
+			
+			//Grab the active radio button
+			if (datadialog->internet->GetValue() == true) 
+			    dataRec.trip = wxT("Internet");
+			if (datadialog->gifted->GetValue() == true) 
+			    dataRec.trip = wxT("Gifted");
+			if (datadialog->walkin->GetValue() == true) 
+			    dataRec.trip = wxT("Walk-in");
+			if (datadialog->telephone->GetValue() == true) 
+			    dataRec.trip = wxT("Telephone");
+	
+			//Grab the list item selected
+			
+			dataRec.season 	   = datadialog->seasonsCombo->GetValue();
+
+			
+			//Clear the main edit box and display the record just grabbed
+			MainEditBox->Clear();
+			
+            
+            			//   You need to disaggregate the data from dataRec to
+			//   send them to your ADTs. e.g.:
+			int    clientID 	 = dataRec.clientID;
+			string firstName = string(dataRec.name.mb_str());
+			string lastName  = string(dataRec.surname.mb_str());;
+			string country    = string(dataRec.country.mb_str());;
+			string season   = string(dataRec.season.mb_str());;
+			string trip      = string(dataRec.trip.mb_str());;
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+			
+			// ... Now send the data to the ADT. e.g
+			a -> insertAVLNode(clientID, firstName, lastName, country, season, trip);
+            }
+             else {
+        datadialog -> Close();
+
+    }
+    datadialog -> Destroy();
         
     }
     
 void MyFrame::OnDeleteDataAVL ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        MainEditBox->Clear(); 
         
+            
     }
     
 void MyFrame::OnInorderAVL ( wxCommandEvent& WXUNUSED ( event ) )
@@ -1945,13 +2087,97 @@ void MyFrame::OnCreateHeap ( wxCommandEvent& WXUNUSED ( event ) )
     
 void MyFrame::OnAddDataHeap ( wxCommandEvent& WXUNUSED ( event ) )
     {
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Add Data to Heap"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+		// If the OK button is clicked...
+		if (datadialog->ShowModal() == wxID_OK )
+		    {
+			//Grab value from the first name Box.
+			dataRec.name = datadialog->NameEditBox->GetValue();
+			
+			//Grab value from the Surname Box
+			dataRec.surname = datadialog->SurnameEditBox->GetValue();
+		
+			//Grab value from the clientID Box
+			dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+			
+			// Grab the total number of nights
+			dataRec.country = datadialog->CountryEditBox->GetValue();
+			
+			
+			//Grab the active radio button
+			if (datadialog->internet->GetValue() == true) 
+			    dataRec.trip = wxT("Internet");
+			if (datadialog->gifted->GetValue() == true) 
+			    dataRec.trip = wxT("Gifted");
+			if (datadialog->walkin->GetValue() == true) 
+			    dataRec.trip = wxT("Walk-in");
+			if (datadialog->telephone->GetValue() == true) 
+			    dataRec.trip = wxT("Telephone");
+	
+			//Grab the list item selected
+			
+			dataRec.season 	   = datadialog->seasonsCombo->GetValue();
+
+			
+			//Clear the main edit box and display the record just grabbed
+			MainEditBox->Clear();
+			
+            
+            			//   You need to disaggregate the data from dataRec to
+			//   send them to your ADTs. e.g.:
+			int    clientID 	 = dataRec.clientID;
+			string firstName = string(dataRec.name.mb_str());
+			string lastName  = string(dataRec.surname.mb_str());;
+			string country    = string(dataRec.country.mb_str());;
+			string season   = string(dataRec.season.mb_str());;
+			string trip      = string(dataRec.trip.mb_str());;
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+			
+			// ... Now send the data to the ADT. e.g
+			h->insertHeap(clientID, firstName, lastName, country, season, trip);
+            }
+             else {
+        datadialog -> Close();
+
+    }
+    datadialog -> Destroy();
         
         
     }
     
 void MyFrame::OnDeleteDataHeap ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        MainEditBox->Clear(); 
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Delete Data from Heap"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+        // If the OK button is clicked...
+        if (datadialog->ShowModal() == wxID_OK )
+        {
+            //Grab value from the clientID Box
+            dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+            
+            
+            //Clear the main edit box and display the record just grabbed
+            MainEditBox->Clear();
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+            
+           int    clientID 	 = dataRec.clientID;
+           
+            h->DeleteNode(clientID);
+        }
+        else              //if (dialogBox->ShowModal() == wxID_CANCEL)
+            datadialog->Close();
+        
+    datadialog->Destroy();
+            
         
     }
     
@@ -2057,15 +2283,98 @@ void MyFrame::OnCreateRBT ( wxCommandEvent& WXUNUSED ( event ) )
     
 void MyFrame::OnAddDataRBT ( wxCommandEvent& WXUNUSED ( event ) )
     {
+        struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Add Data to RBT"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+		// If the OK button is clicked...
+		if (datadialog->ShowModal() == wxID_OK )
+		    {
+			//Grab value from the first name Box.
+			dataRec.name = datadialog->NameEditBox->GetValue();
+			
+			//Grab value from the Surname Box
+			dataRec.surname = datadialog->SurnameEditBox->GetValue();
+		
+			//Grab value from the clientID Box
+			dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+			
+			// Grab the total number of nights
+			dataRec.country = datadialog->CountryEditBox->GetValue();
+			
+			
+			//Grab the active radio button
+			if (datadialog->internet->GetValue() == true) 
+			    dataRec.trip = wxT("Internet");
+			if (datadialog->gifted->GetValue() == true) 
+			    dataRec.trip = wxT("Gifted");
+			if (datadialog->walkin->GetValue() == true) 
+			    dataRec.trip = wxT("Walk-in");
+			if (datadialog->telephone->GetValue() == true) 
+			    dataRec.trip = wxT("Telephone");
+	
+			//Grab the list item selected
+			
+			dataRec.season 	   = datadialog->seasonsCombo->GetValue();
+
+			
+			//Clear the main edit box and display the record just grabbed
+			MainEditBox->Clear();
+			
+            
+            			//   You need to disaggregate the data from dataRec to
+			//   send them to your ADTs. e.g.:
+			int    clientID 	 = dataRec.clientID;
+			string firstName = string(dataRec.name.mb_str());
+			string lastName  = string(dataRec.surname.mb_str());;
+			string country    = string(dataRec.country.mb_str());;
+			string season   = string(dataRec.season.mb_str());;
+			string trip      = string(dataRec.trip.mb_str());;
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+			
+			// ... Now send the data to the ADT. e.g
+			r->insertRBT(clientID, firstName, lastName, country, season, trip);
+            }
+             else              //if (dialogBox->ShowModal() == wxID_CANCEL)
+            datadialog->Close();
         
+    datadialog->Destroy();
+            
         
     }
     
 void MyFrame::OnDeleteDataRBT ( wxCommandEvent& WXUNUSED ( event ) )
     {
-        MainEditBox->Clear(); 
-        
+         struct record dataRec;
+		
+		DataDialog *datadialog = new DataDialog( wxT("Delete Data from RBT"), 
+							 wxPoint(200,200), wxSize(700,300) );
+
+        // If the OK button is clicked...
+        if (datadialog->ShowModal() == wxID_OK )
+        {
+            //Grab value from the clientID Box
+            dataRec.clientID = datadialog->ClientIDEditBox->GetValue();
+            
+            
+            //Clear the main edit box and display the record just grabbed
+            MainEditBox->Clear();
+            
+            MainEditBox->AppendText(getDataString(dataRec));
+            
+           int    clientID 	 = dataRec.clientID;
+           
+            r->remove(clientID);
+        }
+        else              //if (dialogBox->ShowModal() == wxID_CANCEL)
+        {
+            datadialog->Close();
+        }
+    datadialog->Destroy();
     }
+    
     
 void MyFrame::OnInorderRBT ( wxCommandEvent& WXUNUSED ( event ) )
     {
@@ -2385,12 +2694,11 @@ void MyFrame::OnAddDataSet ( wxCommandEvent& WXUNUSED ( event ) )
 
 			// ... Now send the data to the ADT. e.g
 			setA->addElements(clientID, firstName, lastName, country, season, trip);
-   }     
-       // else {
-           // setB->addElements(clientID, name, surname, destination, period, booking);
-//}
+            }    
+       
         
     }
+    
     
 void MyFrame::OnDisplaySetA ( wxCommandEvent& WXUNUSED ( event ) )
     {
