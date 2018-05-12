@@ -2070,7 +2070,7 @@ void MyFrame::OnCreateHeap ( wxCommandEvent& WXUNUSED ( event ) )
         if (!infile.eof())
            {
             // Put the record in the Heap
-            if (period == " Summer")
+            if (head % 2 == 0)
             {
                 h->insertHeap(clientID, firstName, lastName, destination, period, booking);
             }
@@ -2642,7 +2642,7 @@ void MyFrame::OnAddDataSet ( wxCommandEvent& WXUNUSED ( event ) )
     {
         struct record dataRec;
 		
-		DataDialog *datadialog = new DataDialog( wxT("COMP2611 - Pelicans Travel Database: 412001481"), 
+		DataDialog *datadialog = new DataDialog( wxT("Add Data to Set"), 
 							 wxPoint(200,200), wxSize(700,300) );
 
 		// If the OK button is clicked...
